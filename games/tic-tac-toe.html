@@ -1,0 +1,131 @@
+<!-- games/tic-tac-toe.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tic Tac Toe | GameHub by Sam</title>
+  <link rel="stylesheet" href="../games/style.css
+  " />
+  <style>
+    .board {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      gap: 10px;
+      justify-content: center;
+      margin: 30px 0;
+    }
+
+    .cell {
+      width: 100px;
+      height: 100px;
+      font-size: 2.5rem;
+      background-color: #b2ebf2;
+      border: 2px solid #0097a7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .placeholder-image {
+      background-color: #ddd;
+      color: #555;
+      padding: 40px;
+      margin: 20px auto;
+      width: 250px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>⭕ Tic Tac Toe ❌</h1>
+
+  <!-- Game Preview -->
+  <div id="preview" class="preview show">
+    <div class="placeholder-image">Tic Tac Toe Preview</div>
+    <p><strong>Instructions:</strong> Click on any cell to place your mark. First to match 3 in a row, column, or diagonal wins.</p>
+    <button onclick="startGame()">▶️ Start Game</button>
+  </div>
+
+  <!-- Game Area -->
+  <div id="game" class="game-area">
+    <div id="status"></div>
+    <div class="board" id="board"></div>
+    <div class="controls">
+      <button onclick="pauseGame()">⏸ Pause</button>
+      <button onclick="restartGame()">🔄 Restart</button>
+      <button onclick="goHome()">🏠 Home</button>
+    </div>
+  </div>
+
+  <script>
+    const board = document.getElementById('board');
+    const statusEl = document.getElementById('status');
+    let gameBoard = Array(9).fill('');
+    let currentPlayer = 'X';
+    let isPaused = false;
+
+    function startGame() {
+      document.getElementById('preview').classList.remove('show');
+      document.getElementById('game').classList.add('show');
+      renderBoard();
+      statusEl.textContent = `Player ${currentPlayer}'s turn`;
+    }
+
+    function renderBoard() {
+      board.innerHTML = '';
+      gameBoard.forEach((cell, index) => {
+        const div = document.createElement('div');
+        div.classList.add('cell');
+        div.textContent = cell;
+        div.addEventListener('click', () => makeMove(index));
+        board.appendChild(div);
+      });
+    }
+
+    function makeMove(index) {
+      if (isPaused || gameBoard[index] !== '') return;
+      gameBoard[index] = currentPlayer;
+      renderBoard();
+      if (checkWinner()) {
+        statusEl.textContent = `🎉 Player ${currentPlayer} wins!`;
+        isPaused = true;
+      } else if (!gameBoard.includes('')) {
+        statusEl.textContent = '🤝 It\'s a draw!';
+      } else {
+        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        statusEl.textContent = `Player ${currentPlayer}'s turn`;
+      }
+    }
+
+    function checkWinner() {
+      const wins = [
+        [0,1,2], [3,4,5], [6,7,8],
+        [0,3,6], [1,4,7], [2,5,8],
+        [0,4,8], [2,4,6]
+      ];
+      return wins.some(([a,b,c]) =>
+        gameBoard[a] && gameBoard[a] === gameBoard[b] && gameBoard[b] === gameBoard[c]
+      );
+    }
+
+    function pauseGame() {
+      isPaused = !isPaused;
+      alert(isPaused ? "⏸ Game Paused" : "▶️ Game Resumed");
+    }
+
+    function restartGame() {
+      gameBoard = Array(9).fill('');
+      currentPlayer = 'X';
+      isPaused = false;
+      renderBoard();
+      statusEl.textContent = `Player ${currentPlayer}'s turn`;
+    }
+
+    function goHome() {
+      window.location.href = '../index.html';
+    }
+  </script>
+</body>
+</html>

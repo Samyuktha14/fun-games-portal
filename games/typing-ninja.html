@@ -1,0 +1,98 @@
+<!-- games/typing-ninja.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Typing Ninja</title>
+  <style>
+    /* games/typing-ninja.css */
+body {
+  font-family: 'Comic Sans MS', cursive;
+  background-color: #fce4ec;
+  text-align: center;
+  padding: 40px;
+}
+
+h1 {
+  color: #d81b60;
+}
+
+#game-area {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  background-color: #f8bbd0;
+  border: 3px solid #ec407a;
+  margin-top: 20px;
+  overflow: hidden;
+}
+
+#letter {
+  position: absolute;
+  font-size: 3rem;
+  color: #880e4f;
+  transition: top 0.05s;
+}
+
+#score {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  color: #ad1457;
+}
+
+  </style>
+</head>
+<body>
+  <h1>⌨️ Typing Ninja</h1>
+  <p>Type the falling letters before they reach the bottom!</p>
+  <div id="game-area">
+    <div id="letter"></div>
+  </div>
+  <div id="score">Score: 0</div>
+
+  <script>
+    const letterEl = document.getElementById('letter');
+    const scoreEl = document.getElementById('score');
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let score = 0;
+    let currentLetter = '';
+    let position = 0;
+    let gameSpeed = 50;
+
+    function spawnLetter() {
+      currentLetter = letters[Math.floor(Math.random() * letters.length)];
+      position = 0;
+      letterEl.textContent = currentLetter;
+      letterEl.style.top = position + 'px';
+      letterEl.style.left = Math.floor(Math.random() * 90) + '%';
+    }
+
+    function moveLetter() {
+      position += 5;
+      letterEl.style.top = position + 'px';
+
+      if (position > 350) {
+        score = Math.max(score - 1, 0);
+        updateScore();
+        spawnLetter();
+      }
+    }
+
+    function updateScore() {
+      scoreEl.textContent = 'Score: ' + score;
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key.toUpperCase() === currentLetter) {
+        score++;
+        updateScore();
+        spawnLetter();
+      }
+    });
+
+    spawnLetter();
+    setInterval(moveLetter, gameSpeed);
+  </script>
+</body>
+</html>

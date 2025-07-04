@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GameHub for Kids</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background-color: #fce4ec;
+      text-align: center;
+      padding: 40px;
+    }
+    h1 {
+      color: #d81b60;
+      font-size: 2.5rem;
+    }
+    .game-buttons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      margin-top: 40px;
+    }
+    button {
+      width: 250px;
+      padding: 15px;
+      font-size: 1.2rem;
+      background-color: #f06292;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #ec407a;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎮 GameHub </h1>
+  <p>Select a game to play and have fun!</p>
+
+  <div class="game-buttons">
+    <button onclick="location.href='games/tic-tac-toe.html'">⭕ Tic-Tac-Toe</button>
+    <button onclick="location.href='games/rock-paper-scissors.html'">✊ Rock-Paper-Scissors</button>
+    <button onclick="location.href='games/memory-game.html'">🧠 Memory Match Game</button>
+    <button onclick="location.href='games/snake-game.html'">🐍 Snake Game</button>
+    <button onclick="location.href='games/typing-ninja.html'">🔢typing-ninja</button>
+    <button onclick="location.href='games/dino-game.html'">dino-game</button>
+  </div>
+</body>
+</html>
